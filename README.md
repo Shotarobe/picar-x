@@ -4,8 +4,8 @@ Picar-X Python library for Raspberry Pi.
 
 Quick Links:
 
-- [Picar-X](#Picar-X)
-  - [About Picar-X](#about-Picar-X)
+- [Picar-X](#picar-x)
+  - [About Robot Hat](#about-robot-hat)
   - [Update](#update)
   - [Installation](#installation)
   - [Trouble Shooting](#trouble-shooting)
