@@ -1,12 +1,14 @@
 # #!/usr/bin/env python3
 
-print('Please run under desktop environment (eg: vnc) to display the image window')
-
 from robot_hat.utils import reset_mcu
 from picarx import Picarx
 from vilib import Vilib
 from time import sleep, time, strftime, localtime
 import readchar
+
+import os
+user = os.getlogin()
+user_home = os.path.expanduser(f'~{user}')
 
 reset_mcu()
 sleep(0.2)
@@ -32,7 +34,7 @@ px = Picarx()
 def take_photo():
     _time = strftime('%Y-%m-%d-%H-%M-%S',localtime(time()))
     name = 'photo_%s'%_time
-    path = "/home/pi/Pictures/picar-x/"
+    path = f"{user_home}/Pictures/picar-x/"
     Vilib.take_photo(name, path)
     print('\nphoto save as %s%s.jpg'%(path,name))
 
