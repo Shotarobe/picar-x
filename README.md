@@ -37,6 +37,14 @@ sudo python3 setup.py install
 sudo apt install espeak
 ```
 
+## Debug
+
+Debug command records
+
+```bash
+cd ~/picar-x && sudo pip3 install . --break --no-deps --no-build-isolation
+```
+
 ## Trouble Shooting
 
 ----------------------------------------------
