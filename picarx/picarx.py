@@ -1,4 +1,4 @@
-from robot_hat import Pin, PWM, Servo, fileDB
+from robot_hat import Pin, PWM, Servo, fileDB, ADC
 from robot_hat import Grayscale_Module, Ultrasonic
 from robot_hat.utils import reset_mcu
 import time
@@ -36,9 +36,9 @@ class Picarx(object):
         # config_flie
         self.config_flie = fileDB(config, 774, User)
         # servos init 
-        self.camera_servo_pin1 = Servo(PWM(servo_pins[0]))
-        self.camera_servo_pin2 = Servo(PWM(servo_pins[1]))   
-        self.dir_servo_pin = Servo(PWM(servo_pins[2])) 
+        self.camera_servo_pin1 = Servo(servo_pins[0])
+        self.camera_servo_pin2 = Servo(servo_pins[1])   
+        self.dir_servo_pin = Servo(servo_pins[2]) 
         self.dir_cal_value = int(self.config_flie.get("picarx_dir_servo", default_value=0))
         self.cam_cal_value_1 = int(self.config_flie.get("picarx_cam_servo1", default_value=0))
         self.cam_cal_value_2 = int(self.config_flie.get("picarx_cam_servo2", default_value=0))
@@ -61,7 +61,9 @@ class Picarx(object):
             pin.prescaler(self.PRESCALER)
         # grayscale module init
         # usage: self.grayscale.get_grayscale_data()
-        adc0, adc1, adc2 = grayscale_pins
+        adc0 = ADC(grayscale_pins[0])
+        adc1 = ADC(grayscale_pins[1])
+        adc2 = ADC(grayscale_pins[2])
         self.grayscale = Grayscale_Module(adc0, adc1, adc2, reference=1000)
         # ultrasonic init
         # usage: distance = self.ultrasonic.read()
