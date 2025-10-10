@@ -1,5 +1,22 @@
 
 from time import sleep
+import time
+from .picarx import Picarx
+from robot_hat.music import Music
+import threading
+import queue
+import random
+from enum import StrEnum
+
+def forward(car):
+    car.forward(5)
+    sleep(1)
+    car.stop()
+
+def backward(car):
+    car.backward(5)
+    sleep(1)
+    car.stop()
 
 def wave_hands(car):
     car.reset()
@@ -198,7 +215,6 @@ def honking(music):
 def start_engine(music):
     music.sound_play_threading("../sounds/car-start-engine.wav", 50)
 
-
 actions_dict = {
     "shake head":shake_head, 
     "nod": nod,
@@ -210,6 +226,8 @@ actions_dict = {
     "twist body": twist_body,
     "celebrate": celebrate,
     "depressed": depressed,
+    "forward": forward,
+    "backward": backward,
 }
 
 sounds_dict = {
@@ -217,3 +235,84 @@ sounds_dict = {
     "start engine": start_engine,
 }
 
+
+class ActionStatus(StrEnum):
+    STANDBY = 'standby'
+    THINK = 'think'
+    ACTIONS = 'actions'
+    ACTIONS_DONE = 'actions_done'
+
+class ActionFlow():
+    def __init__(self, car: Picarx) -> None:
+        self.car = car
+        self.music = Music()
+        self.status = ActionStatus.STANDBY
+        self.last_status = None
+        self.action_queue = queue.Queue()
+        self.running = False
+        self.thread = None
+
+    def do_action(self, action: str) -> None:
+        if action in actions_dict:
+            actions_dict[action](self.car)
+        elif action in sounds_dict:
+            sounds_dict[action](self.music)
+
+    def action_handler(self) -> None:
+        last_action_time = time.time()
+        action_interval = 5 # seconds
+    
+        try:
+            while self.running:
+                # actions
+                # ------------------------------
+                if self.status == ActionStatus.STANDBY:
+                    self.last_status = ActionStatus.STANDBY
+                    if time.time() - last_action_time > action_interval:
+                        # TODO: standby actions
+                        last_action_time = time.time()
+                        action_interval = random.randint(2, 6)
+                elif self.status == ActionStatus.THINK:
+                    if self.last_status != ActionStatus.THINK:
+                        self.last_status = ActionStatus.THINK
+                        keep_think(self.car)
+                elif self.status == ActionStatus.ACTIONS:
+                    if self.last_status != ActionStatus.ACTIONS:
+                        self.last_status = ActionStatus.ACTIONS
+                    _action = self.action_queue.get()
+                    self.do_action(_action)
+                    time.sleep(0.5)
+                    if self.action_queue.empty():
+                        self.status = ActionStatus.STANDBY
+                        last_action_time = time.time()
+
+                time.sleep(0.01)
+        except Exception as e:
+            print(f"action handler error: {e}")
+
+    def add_action(self, *actions):
+        for action in actions:
+            if action not in actions_dict and action not in sounds_dict:
+                print(f"action {action} not found")
+                continue
+            self.action_queue.put(action)
+        self.status = ActionStatus.ACTIONS
+    
+    def set_status(self, status):
+        self.status = status
+
+    def wait_actions_done(self):
+        while self.status != ActionStatus.STANDBY:
+            time.sleep(0.01)
+
+    def start(self):
+        self.running = True
+        self.status = ActionStatus.STANDBY
+        self.action_queue = queue.Queue()
+        self.thread = threading.Thread(name="action_handler", target=self.action_handler)
+        self.thread.start()
+
+    def stop(self):
+        self.running = False
+        if self.thread != None:
+            self.thread.join()

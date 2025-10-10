@@ -30,7 +30,13 @@ Debug command records
 cd ~/picar-x && sudo pip3 install . --break --no-deps --no-build-isolation
 ```
 
-## Trouble Shooting
+## Debug records
+
+```bash
+sudo pip3 uninstall picar-x --break -y && cd ~/picar-x && sudo pip3 install . --break --no-deps --no-build-isolation
+sudo pip3 uninstall robot_hat --break -y && cd ~/robot-hat && sudo pip3 install . --break --no-deps --no-build-isolation
+sudo python3 ~/picar-x/examples/14_voice_active_car_gpt.py
+```
 
 ----------------------------------------------
 
