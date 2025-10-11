@@ -19,7 +19,6 @@ Picar-X Python library for Raspberry Pi.
 git clone -b 2.1.x https://github.com/sunfounder/picar-x.git
 cd picar-x
 sudo pip3 install . --break
-
 ```
 
 ## Debug
