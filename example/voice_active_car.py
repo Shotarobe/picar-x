@@ -1,8 +1,8 @@
-from robot_hat.voice_assistant import VoiceAssistant
-from robot_hat.led import LED
+from picarx.voice_assistant import VoiceAssistant
+from picarx.led import LED
 
-from .picarx import Picarx
-from .preset_actions import ActionFlow
+from picarx.picarx import Picarx
+from picarx.preset_actions import ActionFlow
 
 import time
 import threading

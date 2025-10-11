@@ -1,7 +1,8 @@
 from picarx.llm import OpenAI as LLM
 from secret import OPENAI_API_KEY as API_KEY
 
-from picarx.voice_active_car import VoiceActiveCar
+from voice_active_car import VoiceActiveCar
+
 from picarx.preset_actions import actions_dict, sounds_dict
 
 llm = LLM(
@@ -19,7 +20,6 @@ TOO_CLOSE = 10
 WITH_IMAGE = True
 
 # Set models and languages
-LLM_MODEL = "gpt-4o-mini"
 TTS_MODEL = "en_US-ryan-low"
 STT_LANGUAGE = "en-us"
 
