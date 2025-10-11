@@ -76,6 +76,10 @@ if __name__=='__main__':
                 px.forward(px_power) 
             else:
                 outHandle()
+
+    except KeyboardInterrupt:
+        print("\nKeyboardInterrupt: stop and exit")
+
     finally:
         px.stop()
         print("stop and exit")

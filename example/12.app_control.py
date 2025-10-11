@@ -1,6 +1,7 @@
 from sunfounder_controller import SunFounderController
 from picarx import Picarx
-from robot_hat import utils, Music
+from picarx import utils
+from picarx.music import Music
 from vilib import Vilib
 import os
 from time import sleep
