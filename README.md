@@ -16,6 +16,17 @@ Picar-X Python library for Raspberry Pi.
   <https://docs.sunfounder.com/projects/picar-x-v20/en/latest/python/python_start/install_all_modules.html>
 
 ```bash
+# Install robot_hat
+git clone --depth 1 -b 2.5.x https://github.com/sunfounder/robot-hat.git
+cd robot-hat
+sudo python3 install.py
+
+# Install vilib
+git clone --depth 1 https://github.com/sunfounder/vilib.git
+cd vilib
+sudo python3 install.py
+
+# Install picar-x
 git clone -b 2.1.x https://github.com/sunfounder/picar-x.git
 cd picar-x
 sudo pip3 install . --break
