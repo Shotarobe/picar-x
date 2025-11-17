@@ -198,9 +198,15 @@ def main():
             Vilib.face_detect_switch(False)  
 
         if sc.get('P') == True:
-            Vilib.object_detect_switch(True) 
+            try:
+                Vilib.object_detect_switch(True) 
+            except ImportError:
+                print("[WARNING] Object detection is currently not available for this OS.")
         else:
-            Vilib.object_detect_switch(False)
+            try:
+                Vilib.object_detect_switch(False)
+            except ImportError:
+                print("[WARNING] Object detection is currently not available for this OS.")
 
 
 if __name__ == "__main__":
