@@ -36,6 +36,7 @@ SafeDistance = 40   # > 40 safe
 DangerDistance = 20 # > 20 && < 40 turn around, < 20 backward
 
 DETECT_COLOR = 'red' # red, green, blue, yellow , orange, purple
+last_values = {}
 
 # init music player
 User = os.popen('echo ${SUDO_USER:-$LOGNAME}').readline().strip()
@@ -193,26 +194,26 @@ def main():
             px.set_cam_tilt_angle(tilt)
 
         # image recognition
-        if sc.get('N') == True:
-            Vilib.color_detect(DETECT_COLOR)
-        else:
-            Vilib.color_detect("close")
-
-        if sc.get('O') == True:
-            Vilib.face_detect_switch(True)  
-        else:
-            Vilib.face_detect_switch(False)  
-
-        if sc.get('P') == True:
-            if TF_SUPPORTED:
-                Vilib.object_detect_switch(True) 
+        n_value = sc.get('N')
+        if n_value != last_values.get('N'):
+            last_values['N'] = n_value
+            if n_value == True:
+                Vilib.color_detect(DETECT_COLOR)
             else:
+                Vilib.color_detect("close")
+
+        o_value = sc.get('O')
+        if o_value != last_values.get('O'):
+            last_values['O'] = o_value
+            Vilib.face_detect_switch(o_value)  
+
+        p_value = sc.get('P')
+        if p_value != last_values.get('P'):
+            last_values['P'] = p_value
+            if not TF_SUPPORTED:
                 print("[WARNING] Object detection is currently not available for this OS.")
-        else:
-            if TF_SUPPORTED:
-                Vilib.object_detect_switch(False)
             else:
-                print("[WARNING] Object detection is currently not available for this OS.")
+                Vilib.object_detect_switch(p_value) 
 
 
 if __name__ == "__main__":
