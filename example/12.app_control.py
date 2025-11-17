@@ -6,6 +6,12 @@ from vilib import Vilib
 import os
 from time import sleep
 
+try:
+    from tflite_runtime.interpreter import Interpreter
+    TF_SUPPORTED = True
+except ImportError:
+    TF_SUPPORTED = False
+
 # reset robot_hat
 utils.reset_mcu()
 sleep(0.2)
@@ -198,14 +204,14 @@ def main():
             Vilib.face_detect_switch(False)  
 
         if sc.get('P') == True:
-            try:
+            if TF_SUPPORTED:
                 Vilib.object_detect_switch(True) 
-            except ImportError:
+            else:
                 print("[WARNING] Object detection is currently not available for this OS.")
         else:
-            try:
+            if TF_SUPPORTED:
                 Vilib.object_detect_switch(False)
-            except ImportError:
+            else:
                 print("[WARNING] Object detection is currently not available for this OS.")
 
 
