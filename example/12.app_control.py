@@ -173,7 +173,7 @@ def main():
         # joystick moving
         if line_track_switch != True and avoid_obstacles_switch != True:
             Joystick_K_Val = sc.get('K')
-            if Joystick_K_Val != None:
+            if Joystick_K_Val != None and isinstance(Joystick_K_Val, list) and len(Joystick_K_Val) == 2:
                 dir_angle = utils.mapping(Joystick_K_Val[0], -100, 100, -30, 30)
                 speed = Joystick_K_Val[1]
                 px.set_dir_servo_angle(dir_angle)
@@ -187,7 +187,7 @@ def main():
 
         # camera servos control
         Joystick_Q_Val = sc.get('Q')
-        if Joystick_Q_Val != None:
+        if Joystick_Q_Val != None and isinstance(Joystick_Q_Val, list) and len(Joystick_Q_Val) == 2:
             pan = min(90, max(-90, Joystick_Q_Val[0]))
             tilt = min(65, max(-35, Joystick_Q_Val[1]))
             px.set_cam_pan_angle(pan)
