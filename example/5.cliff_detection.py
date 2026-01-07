@@ -18,7 +18,7 @@ from time import sleep
 px = Picarx()
 # px = Picarx(grayscale_pins=['A0', 'A1', 'A2'])
 # manual modify reference value
-px.set_cliff_reference([200, 200, 200])
+px.set_cliff_reference([135, 132, 122]) #調整済み
 
 last_state = "safe"
 
