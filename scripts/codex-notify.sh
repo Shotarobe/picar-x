@@ -7,6 +7,16 @@ bell_cooldown="${CODEX_NOTIFY_COOLDOWN:-2}"
 watcher_pid=""
 last_bell_at=0
 
+# Older shells may still export ntfy auto-done settings even after the shell
+# integration was removed from ~/.bashrc. Clear them before launching Codex so
+# child login shells do not try to send desktop notifications over DBus.
+unset AUTO_NTFY_DONE_IGNORE
+unset AUTO_NTFY_DONE_OPTS
+unset AUTO_NTFY_DONE_UNFOCUSED_ONLY
+unset AUTO_NTFY_DONE_LONGER_THAN
+unset ntfy_start_time
+unset ntfy_command
+
 start_watcher() {
     [ -f "$log_file" ] || return 0
 
