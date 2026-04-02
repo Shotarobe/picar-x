@@ -3,12 +3,12 @@ from picarx.stt import Vosk
 import time
 
 px = Picarx()
-stt = Vosk(language="en-us")
+stt = Vosk(language="ja")
 
 
-WAKE_WORDS = ["hey robot"]
+WAKE_WORDS = ["ロボット"]
 
-print('Say "hey robot" to wake me up! Then say: forward / backward / left / right. Say "sleep" to stop listening.')
+print('Say "ロボット" to wake me up! Then say: forward / backward / left / right. Say "スリープ" to stop listening.')
 
 try:
     while True:
@@ -26,26 +26,26 @@ try:
 
             print("Heard:", text)
 
-            if "sleep" in text:
+            if "スリープ" in text:
                 # pause command mode; go back to wait for wake word
                 px.stop(); px.set_dir_servo_angle(0)
                 print("Sleeping. Say 'hey robot' to wake me again.")
                 break
 
-            elif "forward" in text:
+            elif "前" in text:
                 px.set_dir_servo_angle(0)
                 px.forward(30); time.sleep(1); px.stop()
 
-            elif "backward" in text:
+            elif "後" in text:
                 px.set_dir_servo_angle(0)
                 px.backward(30); time.sleep(1); px.stop()
 
-            elif "left" in text:
+            elif "左" in text:
                 px.set_dir_servo_angle(-25)
                 px.forward(30); time.sleep(1)
                 px.stop(); px.set_dir_servo_angle(0)
 
-            elif "right" in text:
+            elif "右" in text:
                 px.set_dir_servo_angle(25)
                 px.forward(30); time.sleep(1)
                 px.stop(); px.set_dir_servo_angle(0)

@@ -5,7 +5,7 @@ import time
 # Default: Piper
 from picarx.tts import Piper
 tts = Piper()
-tts.set_model("en_US-amy-low")  # use the voice model you installed
+tts.set_model("en_US-amy-low")  # this package has no bundled Japanese Piper voice
 
 # Optional: switch to OpenAI TTS
 # from picarx.tts import OpenAI_TTS
@@ -18,7 +18,7 @@ tts.set_model("en_US-amy-low")  # use the voice model you installed
 px = Picarx()
 
 # Quick hello (sanity check)
-tts.say("Hello! I'm PiCar-X speaking with Piper.")
+tts.say("こんにちは。Piper で話す PiCar-X です。")
 
 def main():
     try:
@@ -26,16 +26,16 @@ def main():
         px.forward(30)
         time.sleep(3)
         px.stop()
-        tts.say("Why can't your nose be twelve inches long? Because then it would be a foot!")
+        tts.say("鼻が30センチになれないのはどうしてでしょう。長すぎると足になってしまうからです。")
 
         # Leg 2
         px.forward(30)
         time.sleep(3)
         px.stop()
-        tts.say("Why did the cow go to outer space? To see the moooon!")
+        tts.say("牛が宇宙へ行ったのはなぜでしょう。ムーンを見に行くためです。")
 
         # Wrap-up
-        tts.say("That's all for today. Goodbye, let's go home and sleep.")
+        tts.say("今日はここまでです。さようなら。帰って休みましょう。")
         px.backward(30)
         time.sleep(6)
         px.stop()
